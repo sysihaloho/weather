@@ -22,6 +22,15 @@ Alternatively you can use the [Spring Boot Maven plugin](https://docs.spring.io/
 ```shell
 mvn spring-boot:run
 ```
+## How the 3rd Party used
+
+We use https://openweathermap.org/api
+How to use it?
+1. sign-up or register
+2. login and fill information of company & reason to use API
+3. You can go to https://home.openweathermap.org/api_keys to get your API_KEY
+4. Copy API_KEY and place it in application.properties in field _project.api.key_
+5. We use API in this page https://openweathermap.org/current
 ## Copyright
 
 Released under the Apache License 2.0. See the [LICENSE](https://github.com/codecentric/springboot-sample-app/blob/master/LICENSE) file.
