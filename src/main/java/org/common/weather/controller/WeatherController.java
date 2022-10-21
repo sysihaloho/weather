@@ -1,11 +1,13 @@
 package org.common.weather.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
+import org.common.weather.util.WeatherFeignUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
@@ -15,6 +17,9 @@ import java.net.URI;
 
 @RestController
 public class WeatherController {
+
+    @Autowired
+    private WeatherFeignUtil weatherFeignUtil;
 
     private final RestTemplate restTemplate;
 
@@ -40,6 +45,12 @@ public class WeatherController {
         } catch (HttpClientErrorException ex) {
             return ResponseEntity.internalServerError().body(ex.getResponseBodyAsString());
         }
+    }
+
+    @GetMapping(value = "/getWeather/{city}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<String> getWeather(@PathVariable String city) {
+        return ResponseEntity.ok().body(weatherFeignUtil.getCurrentWeather(city, apiKey, "metric"));
     }
 
 }
